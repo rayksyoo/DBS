@@ -49,8 +49,12 @@ df = dbs_cal_df (hypoTest, numSubj); % calculate degree of freedom (DOF or DF) g
 
 icft_s = dbs_set_initrange (hypoTest, icft_p, df, direction);
 
-temp_perm_s = perm_result.s - icft_s;
-temp_perm_s(temp_perm_s<0) = 0;
+temp_perm_p = zeros(size(perm_result.p));
+temp_perm_p(perm_result.p < icft_p) = 1;
+temp_perm_s = perm_result.s;
+temp_perm_s(~temp_perm_p) = 0; temp_perm_s = abs(temp_perm_s);
+
+temp_perm_s = temp_perm_s - icft_s;
 temp_perm_wd_max = sort(max(squeeze(sum(temp_perm_s))), 'descend')';
 
 thrClst1 = ceil(thrClst*numPerm); % thrClst1 = floor(thrClst*numPerm);
@@ -61,8 +65,12 @@ dbs_result.thr = temp_perm_wd_max(thrClst1);
 p(isnan(p)) =1;    s(isnan(s)) =0;
 
 %% Correction with DBS
-obs_s = s - icft_s;
-obs_s(obs_s<0) = 0;
+obs_p = zeros(size(p));
+obs_p(p < icft_p) = 1;
+obs_s = s;
+obs_s(~obs_p) = 0; obs_s = abs(obs_s);
+
+obs_s = obs_s - icft_s;
 
 dbs_result.wd = sum(obs_s)';
 dbs_result.nodeCent = find(dbs_result.wd > dbs_result.thr);
@@ -79,8 +87,19 @@ dbs_result.conMat_orig = obs_sOrig .* tempMatLine;
 
 icft_s2 = dbs_set_initrange (hypoTest, 0.05, df, direction);
 
-obs_s2 = s - icft_s2;    obs_s2(obs_s2<0) = 0;
-temp_perm_s2 = perm_result.s - icft_s2;    temp_perm_s2(temp_perm_s2<0) = 0;
+obs_p2 = zeros(size(p));
+obs_p2(p < 0.05) = 1;
+obs_s2 = s;
+obs_s2(~obs_p) = 0; obs_s2 = abs(obs_s2);
+
+obs_s2 = obs_s2 - icft_s2;
+
+temp_perm_p2 = zeros(size(perm_result.p));
+temp_perm_p2(perm_result.p < 0.05) = 1;
+temp_perm_s2 = perm_result.s;
+temp_perm_s2(~temp_perm_p2) = 0; temp_perm_s2 = abs(temp_perm_s2);
+
+temp_perm_s2 = temp_perm_s2 - icft_s;
 
 cp_result.score = sum(obs_s2.^2 /2)';
 temp_perm_cp_max = sort(max(squeeze(sum(temp_perm_s2.^2/2))), 'descend')';
