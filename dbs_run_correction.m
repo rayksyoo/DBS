@@ -67,6 +67,7 @@ temp_perm_s = perm_result.s;
 temp_perm_s(~temp_perm_p) = 0; temp_perm_s = abs(temp_perm_s);
 
 temp_perm_s = temp_perm_s - icft_s;
+temp_perm_s(temp_perm_s<0) = 0;
 temp_perm_wd_max = sort(max(squeeze(sum(temp_perm_s))), 'descend')';
 
 thrClst1 = ceil(thrClst*numPerm); % thrClst1 = floor(thrClst*numPerm);
@@ -83,6 +84,7 @@ obs_s = s;
 obs_s(~obs_p) = 0; obs_s = abs(obs_s);
 
 obs_s = obs_s - icft_s;
+obs_s(obs_s<0) = 0;
 
 dbs_result.wd = sum(obs_s)';
 dbs_result.nodeCent = find(dbs_result.wd > dbs_result.thr);
@@ -105,6 +107,7 @@ obs_s2 = s;
 obs_s2(~obs_p) = 0; obs_s2 = abs(obs_s2);
 
 obs_s2 = obs_s2 - icft_s2;
+obs_s2(obs_s2<0) = 0;
 
 temp_perm_p2 = zeros(size(perm_result.p));
 temp_perm_p2(perm_result.p < 0.05) = 1;
