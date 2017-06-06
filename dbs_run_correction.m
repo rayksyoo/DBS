@@ -114,7 +114,8 @@ temp_perm_p2(perm_result.p < 0.05) = 1;
 temp_perm_s2 = perm_result.s;
 temp_perm_s2(~temp_perm_p2) = 0; temp_perm_s2 = abs(temp_perm_s2);
 
-temp_perm_s2 = temp_perm_s2 - icft_s;
+temp_perm_s2 = temp_perm_s2 - icft_s2;
+temp_perm_s2(temp_perm_s2<0) = 0;
 
 cp_result.score = sum(obs_s2.^2 /2)';
 temp_perm_cp_max = sort(max(squeeze(sum(temp_perm_s2.^2/2))), 'descend')';
