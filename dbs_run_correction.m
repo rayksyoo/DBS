@@ -73,6 +73,11 @@ temp_perm_wd_max = sort(max(squeeze(sum(temp_perm_s))), 'descend')';
 thrClst1 = ceil(thrClst*numPerm); % thrClst1 = floor(thrClst*numPerm);
 dbs_result.thr = temp_perm_wd_max(thrClst1);
 
+% For binary degree
+% temp_perm_s(temp_perm_s>0) = 1;
+% temp_perm_bd_max = sort(max(squeeze(sum(temp_perm_s))), 'descend')';
+% dbs_result.thrBD = temp_perm_bd_max(thrClst1);
+
 %% Test the hypothesis
 [s, ~, p] = dbs_hypo_test(setmat, label, hypoTest, direction);
 p(isnan(p)) =1;    s(isnan(s)) =0;
@@ -95,6 +100,18 @@ dbs_result.conMat_height = obs_s .* tempMatLine;
 obs_sOrig = s;
 obs_sOrig(obs_s==0) = 0;
 dbs_result.conMat_orig = obs_sOrig .* tempMatLine;
+
+% For binary degree
+% obs_sBD = obs_s;    obs_sBD(obs_sBD>0) = 1;
+% dbs_result.bd = sum(obs_sBD)';
+% dbs_result.nodeCentBD = find(dbs_result.bd > dbs_result.thrBD);
+% 
+% tempMatLine2 = zeros(numNode);
+% tempMatLine2(dbs_result.nodeCentBD,:) = 1;    tempMatLine2(:,dbs_result.nodeCentBD) = 1;
+% dbs_result.conMat_heightBD = obs_sBD .* tempMatLine2;
+% obs_sOrigBD = s;
+% obs_sOrigBD(obs_sBD==0) = 0;
+% dbs_result.conMat_origBD = obs_sOrigBD .* tempMatLine2;
 
 %% Calculate Center Persistency (CP) score
 % thr_p_min = min(min(min(perm_result.p)));
