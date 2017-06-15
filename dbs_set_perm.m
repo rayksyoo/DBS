@@ -74,7 +74,11 @@ timeNow = clock;
 defaultans = {['DBS_perm_' num2str(timeNow(1)) num2str(timeNow(2)) num2str(timeNow(3), '%02i') '_' num2str(timeNow(4), '%02i') '_' num2str(timeNow(5), '%02i') '.mat']};
 nameSave = inputdlg(prompt,dlg_title,num_lines,defaultans);
 
-if ~isempty(nameSave{1})
+if isempty(nameSave)
+    fileName = '';
+elseif ~isempty(nameSave{1})
     fileName = nameSave{1};
     save([fileName], 'perm_result', 'setmat', 'label', 'hypoTest', 'direction', 'numPerm');
+else
+    fileName = '';
 end
