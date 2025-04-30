@@ -5,4 +5,4 @@ Yoo K et al., Degree-based statistic (DBS) and center persistency (CP) for brain
 
 'Demo' directory contains an example code (demo.m) and data (demo.mat). Please check the code file.
 
-Contact: Kwangsun Yoo, PhD. kwangsun.yoo@yale.edu / rayksyoo@gmail.com
+Contact: Kwangsun Yoo, PhD. rayksyoo@gmail.com
